@@ -27,8 +27,18 @@ namespace CopyPathUtil
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
 
             _tray = new NotifyIcon();
-            _tray.Icon = SystemIcons.Application;
             _tray.Text = "Copy Path Hotkey  -  Ctrl+Shift+C";
+
+            string exePath = Assembly.GetExecutingAssembly().Location;
+
+            using (Icon exeIcon = Icon.ExtractAssociatedIcon(exePath))
+            {
+                if (exeIcon != null)
+                {
+                    _tray.Icon = (Icon)exeIcon.Clone();
+                }
+            }
+
             _tray.Visible = true;
 
             var menu = new ContextMenuStrip();
